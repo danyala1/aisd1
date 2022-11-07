@@ -52,3 +52,51 @@ public:
         }
         return false;
     }
+
+    void Set(double coefficent, double degree)
+    {
+        if (!DetectOldDegree(coefficent, degree))
+        {
+            if (coefficent != 0) {
+                list* pointer;
+                pointer = new list;
+                pointer->coefficent = coefficent;
+                pointer->degree = degree;
+                pointer->next = this->head;
+                this->head = pointer;
+                count++;
+            }
+        }
+
+    }
+
+    int DeleteElement(double degree)//1x1+2x2+3x3   2
+    {
+        int NowCount = 0;
+        list* FunctionHead = GetHead();
+        list* pred = FunctionHead;
+        while (NowCount < count)
+        {
+            if (FunctionHead->degree == degree)
+            {
+                if (NowCount == 0)
+                {
+                    SetHead(FunctionHead->next);
+
+                }
+                else if (NowCount == count - 1)
+                {
+                    pred->next = nullptr;
+                }
+                else {
+                    pred->next = FunctionHead->next;
+                }
+                delete FunctionHead;
+                count--;
+                return 1;
+            }
+            pred = FunctionHead;
+            FunctionHead = FunctionHead->next;
+            NowCount++;
+        }
+        return 0;
