@@ -100,3 +100,41 @@ public:
             NowCount++;
         }
         return 0;
+    }
+
+    void Derivative() {
+        list* FunctionHead = GetHead();
+        cout << "\nНаша производная: ";
+        bool FirstStart = true;
+        while (FunctionHead) {
+            if (!FirstStart) {
+
+                if (FunctionHead->coefficent * FunctionHead->degree > 0) cout << "+";
+            }
+            cout << FunctionHead->coefficent * FunctionHead->degree;
+            if (FunctionHead->degree != 1) {
+                cout << "x^" << FunctionHead->degree - 1;
+            }
+            FirstStart = false;
+            FunctionHead = FunctionHead->next;
+        }
+
+    }
+
+    void Multiplication(double value) {
+        list* FunctionHead = GetHead();
+        while (FunctionHead) {
+            FunctionHead->coefficent = FunctionHead->coefficent * value;
+            FunctionHead = FunctionHead->next;
+        }
+        cout << "\nСкалярное произведение высчитано...\n";
+    }
+    void Calculation(double x) {
+        list* FunctionHead = GetHead();
+        double sum = 0;
+        while (FunctionHead) {
+            sum += FunctionHead->coefficent * pow(x, FunctionHead->degree);
+            FunctionHead = FunctionHead->next;
+        }
+        cout << "При x=" << x << " значение последовательности равно " << sum << endl;
+    }
