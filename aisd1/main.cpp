@@ -272,3 +272,104 @@ public:
         std::cout << _err << std::endl;
     }
 };
+
+
+int main() {
+    try
+    {
+        double coefficent, degree;
+        int vibor;
+        setlocale(LC_ALL, "RUS");
+        cout << "Многочлен пока не создан, введите коэффицент первого элемента: " << endl;
+        cin >> coefficent;
+        cout << "Введите его степень: " << endl;
+        cin >> degree;
+        Equalization A(coefficent, degree);
+        bool flag = true;
+        while (flag) {
+            A.DeleteElement(0);
+            cout << A;
+            cout << "Выберите действие:\n1)Добавить новый элемент\n2)Умножить на скаляр\n3)Вычислить х\n4)Найти производную\n5)Сумма с другим многочленом\n6)Вычесть из него другой многочлен\n7)Средактировать коэффицент\n8)Удалить элемент\n9)Сравнить многочлены\n10)Выход\n";
+            cin >> vibor;
+            if (vibor == 1)
+            {
+                cout << "Введите коэффицент нового элемента: " << endl;
+                cin >> coefficent;
+                cout << "Введите его степень: " << endl;
+                cin >> degree;
+                A.Set(coefficent, degree);
+            }
+            else if (vibor == 2) {
+                cout << "Введите значение на которое хотите умножить: " << endl;
+                cin >> degree;
+                A.Multiplication(degree);
+            }
+            else if (vibor == 3) {
+                cout << "Введите значение х: " << endl;
+                cin >> degree;
+                A.Calculation(degree);
+            }
+            else if (vibor == 4) {
+                A.Derivative();
+            }
+            else if (vibor == 5 || vibor == 6) {
+                bool SumOperation = false;
+                if (vibor == 5) SumOperation = true;
+                Equalization B(0, 0);
+                do {
+                    cout << "Выберите коэффицент элемента нового многочлена: ";
+                    cin >> coefficent;
+                    cout << "Выберите степень элемента нового многочлена: ";
+                    cin >> degree;
+                    B.Set(coefficent, degree);
+                    cout << "Добавить еще один элемент к многочлену? \n1)Да\n2)Нет";
+                    cin >> vibor;
+                } while (vibor == 1);
+                if (SumOperation) A + B;
+                else A - B;
+            }
+            else if (vibor == 7) {
+                cout << "Выберите степень элемента который редактируем: ";
+                cin >> degree;
+                A[degree];
+            }
+            else if (vibor == 8) {
+                cout << "Выберите степень элемента который удаляем: ";
+                cin >> degree;
+                if (A.DeleteElement(degree) == 0) cout << "Нет такого элемента :(" << endl;
+            }
+            else if (vibor == 9)
+            {
+
+                cout << "Какую точность  желаете выбрать? напшите в формате " << 0.001 << "\n";
+                cin >> A.epsilon;
+
+                Equalization B(0, 0);
+                do {
+
+                    cout << "Выберите коэффицент элемента нового многочлена: ";
+                    cin >> coefficent;
+                    cout << "Выберите степень элемента нового многочлена: ";
+                    cin >> degree;
+                    B.Set(coefficent, degree);
+                    cout << "Добавить еще один элемент к многочлену? \n1)Да\n2)Нет";
+                    cin >> vibor;
+                } while (vibor == 1);
+                cout << B;
+                if (A == B)cout << "Многочлены равны\n";
+                else cout << "Многочлены НЕ равны\n";
+            }
+            else if (vibor == 10) {
+                flag = false;
+            }
+            else {
+                system("CLS");
+            }
+
+        }
+    }
+    catch (EClassException& err)
+    {
+        err.Print();
+    }
+}
