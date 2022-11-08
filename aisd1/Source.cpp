@@ -130,29 +130,6 @@ list* Equalization::GetHead()
         cout << "ѕри x=" << x << " значение последовательности равно " << sum << endl;
     }
 
-    bool Equalization:: operator ==(Equalization& src)
-    {
-        list* FunctionHead = GetHead();
-        list* StartHeadB = src.head;
-        int SearchSuccesesful = 0;
-        if (count != src.count) return false;
-        while (src.head) {
-            while (FunctionHead) {
-
-                //          ||degree1|  -   |degree2||   <  |epsilon|
-                if (abs(abs(FunctionHead->degree) - abs(src.head->degree)) <= abs(epsilon) &&
-                    abs(abs(FunctionHead->coefficent) - abs(src.head->coefficent)) <= abs(epsilon)) SearchSuccesesful++;
-                FunctionHead = FunctionHead->next;
-            }
-            src.head = src.head->next;
-        }
-        src.head = StartHeadB;
-
-        if (SearchSuccesesful == count) return true;
-        else return false;
-
-    }
-
     void Equalization:: operator -(Equalization& src)
     {
         list* FunctionHead = GetHead();

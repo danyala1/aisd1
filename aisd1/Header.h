@@ -10,7 +10,6 @@ struct list {
 class Equalization
 {
 public:
-    double epsilon = 0.1;
     
     list *head = nullptr;
     int count = 0;
@@ -33,7 +32,6 @@ public:
 
     void Calculation(double x);
 
-    bool operator==(Equalization& src);
 
     void operator -(Equalization& src);
 
