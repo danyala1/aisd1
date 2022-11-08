@@ -233,3 +233,42 @@ public:
         cout << "Нет такой степени :( \n";
         return 0;
     }
+    friend ostream& operator<<(ostream& os, Equalization obj);
+};
+ostream& operator<<(ostream& os, Equalization obj)
+{
+    bool FirstStart = true;
+    cout << "\nНаша последовательность: ";
+    while (obj.head) {
+        if (obj.head->coefficent == 0)
+        {
+            obj.DeleteElement(obj.head->degree);
+            FirstStart = true;
+        }
+        if (!FirstStart && obj.head->coefficent > 0) cout << "+";
+        if (obj.head->coefficent != 1) cout << obj.head->coefficent;
+        if (obj.head->degree != 0) cout << "x";
+        else cout << obj.head->coefficent;
+        if (obj.head->degree < 0) { cout << "^(" << obj.head->degree << ")"; }
+        else if (obj.head->degree != 1 && obj.head->degree != 0) cout << "^" << obj.head->degree;
+
+        obj.head = obj.head->next;
+        FirstStart = false;
+    }
+    cout << "\n";
+    return os;
+}
+class EClassException
+{
+protected:
+    char _err[256];
+public:
+    EClassException(const char* err) {
+        strncpy_s(_err, err, 255);
+        _err[255] = 0;
+    }
+    void Print()
+    {
+        std::cout << _err << std::endl;
+    }
+};
