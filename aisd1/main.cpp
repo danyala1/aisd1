@@ -138,3 +138,98 @@ public:
         }
         cout << "При x=" << x << " значение последовательности равно " << sum << endl;
     }
+
+    bool operator==(Equalization& src)
+    {
+        list* FunctionHead = GetHead();
+        list* StartHeadB = src.head;
+        int SearchSuccesesful = 0;
+        if (count != src.count) return false;
+        while (src.head) {
+            while (FunctionHead) {
+
+                //          ||degree1|  -   |degree2||   <  |epsilon|
+                if (abs(abs(FunctionHead->degree) - abs(src.head->degree)) <= abs(epsilon) &&
+                    abs(abs(FunctionHead->coefficent) - abs(src.head->coefficent)) <= abs(epsilon)) SearchSuccesesful++;
+                FunctionHead = FunctionHead->next;
+            }
+            src.head = src.head->next;
+        }
+        src.head = StartHeadB;
+
+        if (SearchSuccesesful == count) return true;
+        else return false;
+
+    }
+
+    void operator -(Equalization& src)
+    {
+        list* FunctionHead = GetHead();
+        list* StartHeadB = src.head;
+        bool SearchSuccesesful;
+        while (src.head) {
+            SearchSuccesesful = false;
+            while (FunctionHead) {
+                if (FunctionHead->degree == src.head->degree)
+                {
+                    SearchSuccesesful = true;
+                    FunctionHead->coefficent -= src.head->coefficent;
+
+                    break;
+                }
+                FunctionHead = FunctionHead->next;
+            }
+            if (!SearchSuccesesful)
+            {
+                Set(src.head->coefficent * (-1), src.head->degree);
+            }
+            src.head = src.head->next;
+        }
+        src.head = StartHeadB;
+    }
+
+    void operator +(Equalization& src)
+    {
+        list* FunctionHead = GetHead();
+        list* StartHeadB = src.head;
+        bool SearchSuccesesful;
+        while (src.head) {
+            SearchSuccesesful = false;
+            while (FunctionHead) {
+                if (FunctionHead->degree == src.head->degree)
+                {
+                    SearchSuccesesful = true;
+                    FunctionHead->coefficent += src.head->coefficent;
+                    if (FunctionHead->coefficent == 0) count--;
+                }
+                FunctionHead = FunctionHead->next;
+            }
+            if (!SearchSuccesesful)
+            {
+                Set(src.head->coefficent, src.head->degree);
+            }
+            src.head = src.head->next;
+        }
+        src.head = StartHeadB;
+    }
+
+    int operator[](double degree)
+    {
+        list* FunctionHead = GetHead();
+        while (FunctionHead) {
+            if (FunctionHead->degree == degree)
+            {
+                double coefficent;
+                cout << "Введите новый коэффицент степени " << FunctionHead->degree << ": ";
+                cin >> coefficent;
+                if (coefficent != 0) {
+                    FunctionHead->coefficent = coefficent;
+                }
+                else { cout << "Нельзя поменять на ноль"; }
+                return 0;
+            }
+            FunctionHead = FunctionHead->next;
+        }
+        cout << "Нет такой степени :( \n";
+        return 0;
+    }
