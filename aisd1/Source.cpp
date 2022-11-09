@@ -94,20 +94,15 @@ list* Equalization::GetHead()
 
     void  Equalization::Derivative() {
         list* FunctionHead = GetHead();
-        cout << "\nНаша производная: ";
-        bool FirstStart = true;
-        while (FunctionHead) {
-            if (!FirstStart) {
-
-                if (FunctionHead->coefficent * FunctionHead->degree > 0) cout << "+";
-            }
-            cout << FunctionHead->coefficent * FunctionHead->degree;
-            if (FunctionHead->degree != 1) {
-                cout << "x^" << FunctionHead->degree - 1;
-            }
-            FirstStart = false;
+        
+        while (FunctionHead)
+        {
+            FunctionHead -> coefficent = FunctionHead -> coefficent * FunctionHead->degree;
+            FunctionHead -> degree--;
             FunctionHead = FunctionHead->next;
+
         }
+        
 
     }
 
