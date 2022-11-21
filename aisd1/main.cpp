@@ -12,6 +12,30 @@ using namespace std;
 */
 
 
+double CheckDouble()
+{
+    double number = 0;
+    while (!(cin >> number) || (cin.peek() != '\n'))
+    {
+        cin.clear();
+        while (cin.get() != '\n');
+        cout << "Input correct value" << endl;
+    }
+    return number;
+}
+
+int CheckChoise()
+{
+    int number = 0;
+    while (!(cin >> number) || (cin.peek() != '\n'))
+    {
+        cin.clear();
+        while (cin.get() != '\n');
+        cout << "Enter a number" << endl;
+    }
+    return number;
+}
+
 int main() {
     try
     {
@@ -19,32 +43,32 @@ int main() {
         int choice;
         setlocale(LC_ALL, "RUS");
         cout << "Многочлен пока не создан, введите коэффицент первого элемента: " << endl;
-        cin >> coefficent;
+        coefficent = CheckDouble();
         cout << "Введите его степень: " << endl;
-        cin >> degree;
+        degree = CheckDouble();
         Equalization A(coefficent, degree);
         bool flag = true;
         while (flag) {
             A.DeleteElement(0);
             cout << A;
             cout << "Выберите действие:\n1)Добавить новый элемент\n2)Умножить на скаляр\n3)Вычислить х\n4)Найти производную\n5)Сумма с другим многочленом\n6)Вычесть из него другой многочлен\n7)Отредактировать коэффицент\n8)Удалить элемент\n9)Выход\n";
-            cin >> choice;
+            choice = CheckChoise();
             if (choice == 1)
             {
                 cout << "Введите коэффицент нового элемента: " << endl;
-                cin >> coefficent;
+                coefficent = CheckDouble();
                 cout << "Введите его степень: " << endl;
-                cin >> degree;
+                degree = CheckDouble();
                 A.Set(coefficent, degree);
             }
             else if (choice == 2) {
                 cout << "Введите значение на которое хотите умножить: " << endl;
-                cin >> degree;
+                degree = CheckDouble();
                 A.Multiplication(degree);
             }
             else if (choice == 3) {
                 cout << "Введите значение х: " << endl;
-                cin >> degree;
+                degree = CheckDouble();
                 A.Calculation(degree);
             }
             else if (choice == 4) {
@@ -56,24 +80,24 @@ int main() {
                 Equalization B(0, 0);
                 do {
                     cout << "Выберите коэффицент элемента нового многочлена: ";
-                    cin >> coefficent;
+                    coefficent = CheckDouble();
                     cout << "Выберите степень элемента нового многочлена: ";
-                    cin >> degree;
+                    degree = CheckDouble();
                     B.Set(coefficent, degree);
-                    cout << "Добавить еще один элемент к многочлену? \n1)Да\n2)Нет";
-                    cin >> choice;
+                    cout << "Добавить еще один элемент к многочлену? \n1)Да\n2)Нет\n";
+                    choice  = CheckChoise();
                 } while (choice == 1);
                 if (SumOperation) A + B;
                 else A - B;
             }
             else if (choice == 7) {
                 cout << "Выберите степень элемента который редактируем: ";
-                cin >> degree;
+                degree = CheckDouble();
                 A[degree];
             }
             else if (choice == 8) {
                 cout << "Выберите степень элемента который удаляем: ";
-                cin >> degree;
+                degree = CheckDouble();
                 if (A.DeleteElement(degree) == 0) cout << "Нет такого элемента :(" << endl;
             }
             else if (choice == 9) {
